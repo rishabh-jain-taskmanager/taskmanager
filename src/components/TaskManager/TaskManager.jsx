@@ -49,18 +49,12 @@ const TaskManager = () => {
         setServers(servers.map(s => {
             if (s.activeTask === id) {
                 s.activeTask = 0;
+                if(!s.deleteRequest)
                 return s;
             }
             else
                 return s
-        }))
-        // return only the non deleted servers
-        // eslint-disable-next-line array-callback-return
-        setServers(servers.filter(s => {
-            if (s.deleteRequest !== true ) {
-                return s
-            }
-        }))
+        }).filter(s=>s)) 
 
     }
 
