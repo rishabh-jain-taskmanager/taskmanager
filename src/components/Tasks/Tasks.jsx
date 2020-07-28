@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Task from "./Task";
+import { TaskContext } from '../../context/TaskContext';
 
-
-const Tasks = ({ tasks, addTask, removeTask, updateTask }) => {
+const Tasks = () => {
+    const { state, dispatch } = useContext(TaskContext);
     return (
         <div className="row">
             <div className="col s12 m12">
@@ -23,16 +24,16 @@ const Tasks = ({ tasks, addTask, removeTask, updateTask }) => {
                                 className="btn waves-effect waves-light"
                                 type="button"
                                 name="action"
-                                onClick={() => addTask()}
+                                onClick={() => dispatch({type: 'ADD_TASK'})}
                             >
                                 Add A Task
                         </button>
                         </span>
-                        {tasks && tasks.length ? tasks.map((t, i) => {
+                        {state.tasks && state.tasks.length ? state.tasks.map((t, i) => {
                             return <span key={i}><Task
                                 task={t}
-                                removeTask={removeTask}
-                                updateTask={updateTask} /></span>
+                                dispatch={dispatch}
+                            /></span>
                         }) : ''
                         }
                     </div>

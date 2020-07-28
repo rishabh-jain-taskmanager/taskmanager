@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import Server from './Server'
+import { TaskContext } from '../../context/TaskContext';
 
-const Servers = ({ servers, addServer, removeServer }) => {
 
+const Servers = () => {
+    const { state, dispatch  } = useContext(TaskContext);
     return (
         <div className="row">
             <div className="col s12 m12">
@@ -23,14 +25,18 @@ const Servers = ({ servers, addServer, removeServer }) => {
                                 className="btn waves-effect waves-light"
                                 type="button"
                                 name="action"
-                                onClick={() => addServer()}>
+                                onClick={() => dispatch({type: 'ADD_SERVER'})}>
                                 Add A Server
                             </button>
                         </span>
-                        <Server
-                            servers={servers}
-                            removeServer={removeServer}
-                        />
+                        {state.servers && state.servers.map((s, i) =>
+                            <span key={i}>
+                                <Server
+                                    s={s}
+                                    dispatch={dispatch}
+                                />
+                            </span>)
+                        }
                     </div>
                 </div>
             </div>
